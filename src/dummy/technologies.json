@@ -1,0 +1,17 @@
+[
+  {
+    "name": "React.js",
+    "category": "Frontend",
+    "icon": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg"
+  },
+  {
+    "name": "Node.js",
+    "category": "Backend",
+    "icon": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nodejs/nodejs-original.svg"
+  },
+  {
+    "name": "MongoDB",
+    "category": "Database",
+    "icon": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/mongodb/mongodb-original.svg"
+  }
+]
