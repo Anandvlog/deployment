@@ -13,5 +13,10 @@
     "name": "MongoDB",
     "category": "Database",
     "icon": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/mongodb/mongodb-original.svg"
+  },
+  {
+    "name": "Next.js",
+    "category": "Database",
+    "icon": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/mongodb/mongodb-original.svg"
   }
 ]
