@@ -1,1 +1,60 @@
 
+
+name: React Frontend CI/CD
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build React app
+        run: npm run build
+
+      - name: Login to Docker Hub
+        uses: docker/login-action@v3
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+
+      - name: Build and push Docker image
+        uses: docker/build-push-action@v6
+        with:
+          context: .
+          push: true
+          tags: |
+            ${{ secrets.DOCKERHUB_USERNAME }}/my-frontend:${{ github.sha }}
+            ${{ secrets.DOCKERHUB_USERNAME }}/my-frontend:latest
+
+      - name: Deploy to AWS EC2
+        uses: appleboy/ssh-action@v1.2.2
+        with:
+          host: ${{ secrets.EC2_HOST }}
+          username: ${{ secrets.EC2_USER }}
+          key: ${{ secrets.EC2_SSH_KEY }}
+          script: |
+            set -eu
+            docker pull ${{ secrets.DOCKERHUB_USERNAME }}/my-frontend:${{ github.sha }}
+            docker rm -f my-frontend || true
+            docker run -d --name my-frontend --restart unless-stopped -p 80:80 ${{ secrets.DOCKERHUB_USERNAME }}/my-frontend:${{ github.sha }}
+            docker ps
