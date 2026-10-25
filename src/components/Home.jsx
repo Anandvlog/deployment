@@ -48,7 +48,7 @@ const Home = () => {
           </p>
 
           <h1 className="text-4xl font-extrabold leading-tight tracking-tight sm:text-5xl lg:text-7xl">
-            Hi, I'm Anand chauhan
+            Hi, I'm Anand
             <br />I Build
             <span className="mt-2 block bg-gradient-to-r from-cyan-400 to-blue-500 bg-clip-text text-transparent">
               Modern Web Apps.
