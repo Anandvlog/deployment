@@ -1,5 +1,3 @@
-
-
 name: React Frontend CI/CD
 
 on:
@@ -54,7 +52,15 @@ jobs:
           key: ${{ secrets.EC2_SSH_KEY }}
           script: |
             set -eu
+
             docker pull ${{ secrets.DOCKERHUB_USERNAME }}/my-frontend:${{ github.sha }}
+
             docker rm -f my-frontend || true
-            docker run -d --name my-frontend --restart unless-stopped -p 80:80 ${{ secrets.DOCKERHUB_USERNAME }}/my-frontend:${{ github.sha }}
+
+            docker run -d \
+              --name my-frontend \
+              --restart unless-stopped \
+              -p 127.0.0.1:8080:80 \
+              ${{ secrets.DOCKERHUB_USERNAME }}/my-frontend:${{ github.sha }}
+
             docker ps
