@@ -1,7 +1,13 @@
+
 services:
   frontend:
-    build: .
-    container_name: my-frontend
+    build:
+      context: .
+      dockerfile: Dockerfile.dev
+    container_name: my-frontend-dev
     ports:
-      - "127.0.0.1:8080:80"
+      - "5173:5173"
+    volumes:
+      - .:/app
+      - /app/node_modules
     restart: unless-stopped
